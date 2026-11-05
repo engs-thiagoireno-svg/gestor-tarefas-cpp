@@ -16,4 +16,6 @@ NoArvore* inserirNaArvore(NoArvore* raiz, Tarefa t);
 NoArvore* buscarNaArvore(NoArvore* raiz, const std::string& titulo);
 void percorrerEmOrdem(NoArvore* raiz);
 
+void liberarArvore(NoArvore*& raiz);
+
 #endif

@@ -49,3 +49,16 @@ NoArvore* inserirNaArvore(NoArvore* raiz, Tarefa t) {
         raiz->direita = inserirNaArvore(raiz->direita, t);
     return raiz;
 }
+
+// Libera todos os nós da árvore recursivo, de baixo para cima
+
+// Parâmetros: raiz - referencia para o ponteiro da raiz, vira nullptr no fim
+
+void liberarArvore(NoArvore*& raiz) {
+    if (raiz == nullptr)
+        return;
+    liberarArvore(raiz->esquerda);
+    liberarArvore(raiz->direita);
+    delete raiz;
+    raiz = nullptr;
+}
