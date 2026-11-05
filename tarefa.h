@@ -3,7 +3,7 @@
 
 #include <string>
 
-// Representa uma tarefa do gestor.
+// Representa uma tarefa do gestor
 struct Tarefa {
     int id;              // identificador único
     std::string titulo;  // nome da tarefa
