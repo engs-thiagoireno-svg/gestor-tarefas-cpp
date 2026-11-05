@@ -1,8 +1,40 @@
 #include "arvore.h"
+#include "arvore.h"
+#include <iostream>
 
-// Insere uma tarefa na árvore, ordenada por título (recursivo).
-// Parâmetros: raiz - raiz atual da (sub)árvore; t - tarefa a inserir.
-// Retorno: a raiz da (sub)árvore depois da inserção.
+// Busca uma tarefa pelo título na árvore 
+
+// Parâmetros: raiz - raiz da sub-arvore, titulo - título procurado
+
+// Retorno: o nó encontrado ou nullptr se não existir.
+
+NoArvore* buscarNaArvore(NoArvore* raiz, const std::string& titulo) {
+    if (raiz == nullptr || raiz->dado.titulo == titulo)
+        return raiz;
+    if (titulo < raiz->dado.titulo)
+        return buscarNaArvore(raiz->esquerda, titulo);
+    return buscarNaArvore(raiz->direita, titulo);
+}
+
+// Mostra as tarefas em ordem alfabética de título esquerda, nó e direita
+
+// Parâmetros: raiz - raiz da sub-arvore a percorrer.
+
+void percorrerEmOrdem(NoArvore* raiz) {
+    if (raiz == nullptr)
+        return;
+    percorrerEmOrdem(raiz->esquerda);
+    std::cout << raiz->dado.titulo << " | prazo: " << raiz->dado.prazo
+              << " | prioridade: " << raiz->dado.prioridade << std::endl;
+    percorrerEmOrdem(raiz->direita);
+}
+
+// Insere uma tarefa na árvore, ordenada por título 
+
+// Parâmetros: raiz - raiz atual da sub-arvore
+
+// Retorno: a raiz da sub-arvore depois da inserção.
+
 NoArvore* inserirNaArvore(NoArvore* raiz, Tarefa t) {
     if (raiz == nullptr) {
         NoArvore* novo = new NoArvore;
