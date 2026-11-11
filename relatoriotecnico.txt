@@ -1,0 +1,49 @@
+RELATORIO TECNICO - GESTOR DE TAREFAS EM C++
+Programacao e Sistemas Computacionais II - Campo Real - 2026/1
+Dupla: Thiago e Murilo
+
+1. VISAO GERAL
+O sistema roda no terminal e permite cadastrar, remover, listar, desfazer,
+buscar e ordenar tarefas (id, titulo, prazo AAAAMMDD, prioridade 1 a 3).
+Todas as estruturas foram implementadas manualmente, com new e delete.
+
+2. POR QUE CADA ESTRUTURA FOI ESCOLHIDA
+- Lista encadeada (lista.cpp): guarda todas as tarefas. O numero de tarefas
+  muda o tempo todo; a lista cresce e encolhe sem realocar nada. Insercao no
+  fim e O(n) (percorre ate o ultimo no) e remocao por id e O(n).
+- Pilha (pilha.cpp): "desfazer" precisa da acao mais recente primeiro, ou
+  seja, LIFO. Cada item guarda o tipo da acao (adicionar/remover) e a
+  tarefa. Push e pop sao O(1), pois so mexem no topo.
+- Fila (fila.cpp): as tarefas pendentes sao executadas na ordem de chegada,
+  ou seja, FIFO. Mantemos ponteiros para inicio e fim, entao enfileirar e
+  desenfileirar sao O(1).
+- Arvore binaria de busca (arvore.cpp): indice por titulo. Permite busca
+  recursiva e listagem em ordem alfabetica (percurso em-ordem). Custo medio
+  O(log n); no pior caso (titulos inseridos ja em ordem) vira O(n), pois
+  a arvore nao e balanceada.
+
+3. ORDENACAO E BUSCA
+- Algoritmo de ordenacao: Insertion Sort por prazo. Complexidade O(n^2) no
+  pior caso e O(n) no melhor caso (vetor quase ordenado). Foi escolhido por
+  ser simples e eficiente para poucas tarefas.
+- Busca sequencial: O(n). Busca binaria: O(log n), exige vetor ordenado.
+  O sistema conta as comparacoes de cada uma (opcao 8 do menu) para mostrar
+  a diferenca na pratica.
+[Thiago: revisar esta secao 3 e a parte da arvore.]
+
+4. GERENCIAMENTO DE MEMORIA
+- Cada no de lista, pilha, fila e arvore e criado com new.
+- Cada no removido recebe delete e o ponteiro passa a ser nullptr.
+- Ao sair do programa, liberarLista, liberarArvore, liberarFila e
+  liberarPilha apagam tudo o que sobrou.
+- Os ponteiros de inicio/topo sao passados por referencia (NoLista*&,
+  NoPilha*&) para que a funcao possa alterar o ponteiro original.
+- Testado com AddressSanitizer (-fsanitize=address): sem vazamentos.
+
+5. INTEGRACAO ENTRE AS PARTES
+- A lista e a fonte principal dos dados. A arvore e a fila sao reconstruidas
+  a partir dela depois de remover ou desfazer (reconstruirIndices), porque a
+  arvore nao tem funcao de remocao.
+- copiarListaParaVetor copia a lista para um vetor, que alimenta a ordenacao
+  e as buscas do Thiago.
+- Limitacao: o vetor tem no maximo 100 tarefas para ordenar/buscar.
