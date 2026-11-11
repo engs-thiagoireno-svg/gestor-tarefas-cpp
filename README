@@ -1,0 +1,53 @@
+# Gestor de Tarefas em C++
+
+Projeto Final — Programação e Sistemas Computacionais II
+Centro Universitário Campo Real · Engenharia de Software · 2026/1 · Prof. Giovane Galvão
+
+## Descrição
+Gestor de tarefas que roda no terminal. O usuário cadastra tarefas (título, prazo e
+prioridade), remove, desfaz ações, vê as pendentes, busca por título, ordena por prazo
+e compara busca sequencial x binária.
+
+**Tema escolhido:** Gestor de Tarefas.
+
+## Como compilar e rodar
+```
+g++ -Wall -Wextra *.cpp -o gestor
+./gestor          # no Windows: chcp 65001 e depois gestor.exe
+```
+
+## Estruturas de dados utilizadas
+```
+                    +-------------------+
+   Usuário -------> |      main.cpp     |  (menu)
+                    +---------+---------+
+        +-----------+---------+-----------+-------------+
+        v           v                     v             v
+ Lista encadeada   Pilha               Fila       Árvore binária
+ (todas as         (desfazer,          (pendentes, (índice por título,
+  tarefas)          LIFO)               FIFO)       busca recursiva)
+        |
+        +--> vetor --> Insertion Sort (prazo) --> busca sequencial / binária
+```
+
+| Estrutura | Arquivo | Para que serve |
+|---|---|---|
+| Lista encadeada | lista.h/.cpp | Guarda todas as tarefas cadastradas |
+| Pilha (LIFO) | pilha.h/.cpp | Desfazer a última ação |
+| Fila (FIFO) | fila.h/.cpp | Tarefas pendentes na ordem de chegada |
+| Árvore binária de busca | arvore.h/.cpp | Busca por título e listagem em ordem alfabética |
+| Insertion Sort | ordenacao.h/.cpp | Ordenar por prazo |
+| Busca sequencial e binária | busca.h/.cpp | Busca por prazo com contagem de comparações |
+
+## Divisão de responsabilidades
+| | Thiago | Murilo |
+|---|---|---|
+| Estruturas | Árvore binária de busca | Lista encadeada, pilha e fila |
+| Algoritmos | Ordenação, busca sequencial e binária | Menu do terminal |
+| Documentos | Revisão da parte técnica do relatório | README e relatório técnico |
+| Requisitos | R3, R8, R9, R10 | R5, R6, R7 |
+| Compartilhados | R1, R2, R4 | R1, R2, R4 |
+
+## Estrutura de arquivos
+`tarefa.h`, `arvore.*`, `ordenacao.*`, `busca.*` (Thiago) ·
+`lista.*`, `pilha.*`, `fila.*`, `main.cpp`, `README.md`, `relatorio_tecnico.txt` (Murilo)  
